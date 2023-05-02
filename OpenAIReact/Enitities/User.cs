@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAIReact.Models
+namespace OpenAIReact.Enitities
 {
     public partial class User
     {
@@ -11,7 +11,5 @@ namespace OpenAIReact.Models
         public string Name { get; set; }
         public string Account { get; set; }
         public string Password { get; set; }
-
-        public virtual Conversation Conversation { get; set; }
     }
 }

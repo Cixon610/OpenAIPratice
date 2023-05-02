@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAIReact.Models
+namespace OpenAIReact.Enitities
 {
     public partial class Messages
     {
@@ -11,7 +11,5 @@ namespace OpenAIReact.Models
         public Guid ConversationId { get; set; }
         public string Message { get; set; }
         public int OrderNo { get; set; }
-
-        public virtual Conversation Conversation { get; set; }
     }
 }

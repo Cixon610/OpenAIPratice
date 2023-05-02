@@ -3,19 +3,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAIReact.Models
+namespace OpenAIReact.Enitities
 {
     public partial class Conversation
     {
-        public Conversation()
-        {
-            Messages = new HashSet<Messages>();
-        }
-
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-
-        public virtual User IdNavigation { get; set; }
-        public virtual ICollection<Messages> Messages { get; set; }
     }
 }

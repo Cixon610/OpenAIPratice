@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Models",
+   "OutputPath": "Enitities",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "OpenAIReact",
    "Schemas": null,

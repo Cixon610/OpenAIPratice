@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace OpenAIReact.Models
+namespace OpenAIReact.Enitities
 {
     public partial class OpenAIContext : DbContext
     {
@@ -26,54 +26,32 @@ namespace OpenAIReact.Models
         {
             modelBuilder.Entity<Conversation>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.Conversation)
-                    .HasForeignKey<Conversation>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Conversation_User");
+                entity.HasNoKey();
             });
 
             modelBuilder.Entity<Messages>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.ConversationId).HasColumnName("ConversationID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.Message)
                     .HasMaxLength(100)
                     .IsFixedLength();
-
-                entity.HasOne(d => d.Conversation)
-                    .WithMany(p => p.Messages)
-                    .HasForeignKey(d => d.ConversationId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Messages_Messages");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.Account)
-                    .HasMaxLength(10)
+                    .HasMaxLength(50)
                     .IsFixedLength();
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(10)
+                    .HasMaxLength(50)
                     .IsFixedLength();
 
                 entity.Property(e => e.Password)
-                    .HasMaxLength(10)
+                    .HasMaxLength(50)
                     .IsFixedLength();
             });
 
