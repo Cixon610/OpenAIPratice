@@ -3,13 +3,16 @@ using OpenAIReact.Models.Request;
 
 namespace OpenAIReact.Controllers
 {
-    public class ChatController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class ChatController : ControllerBase
     {
-        private ILogger _logger { get; set; }
+        private ILogger<ChatController> _logger { get; set; }
         public ChatController(ILogger<ChatController> logger)
         {
             _logger = logger;
         }
+
         [HttpGet]
         public HttpResponse Send(ChatInitReq req)
         {

@@ -4,7 +4,7 @@ namespace OpenAIReact.Services
 {
     public class ConversationService
     {
-        private ILogger<ConversationService> _logger;
+        private ILogger<ConversationService> _logger { get; set; }
 
         public ConversationService(ILogger<ConversationService> logger)
         {

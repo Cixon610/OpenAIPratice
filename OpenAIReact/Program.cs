@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using OpenAIReact.Enitities;
 using Serilog;
 using Serilog.Events;
+using System.Text;
 
 Log.Logger = new LoggerConfiguration()
     //Serilog要寫入的最低等級為Information
@@ -21,6 +24,23 @@ try
     builder.Services.AddControllersWithViews();
     builder.Services.AddDbContext<OpenAIContext>(
         options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                ValidateIssuer = true,
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidateAudience = true,
+                ValidAudience = builder.Configuration["Jwt:Audience"]
+            };
+        });
+
     builder.Host.UseSerilog();
     var app = builder.Build();
 
