@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using OpenAIReact.Enitities;
 using Serilog;
 using Serilog.Events;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Text;
 
 Log.Logger = new LoggerConfiguration()
@@ -24,7 +26,6 @@ try
     builder.Services.AddControllersWithViews();
     builder.Services.AddDbContext<OpenAIContext>(
         options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-    
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
@@ -49,6 +50,8 @@ try
     {
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
+        app.UseSwagger();
+        app.UseSwaggerUI();
     }
 
     app.UseHttpsRedirection();
