@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using OpenAIService.Entities;
 using OpenAIService.Helpers;
+using OpenAIService.Models.Request;
+using OpenAIService.Models.Response;
+using OpenAIService.ViewModels;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -16,28 +20,28 @@ namespace OpenAIService.Controllers
         private readonly ILogger<AuthController> _logger;
         private readonly IConfiguration _config;
         private readonly JwtHelper _jwtHelper;
+        private readonly OpenAIContext _openAIContext;
+        private readonly IMapper _mapper;
 
-        public AuthController(ILogger<AuthController> logger, IConfiguration config, JwtHelper jwtHelper)
+        public AuthController(ILogger<AuthController> logger, IConfiguration config, JwtHelper jwtHelper, OpenAIContext openAIContext, IMapper mapper)
         {
             _logger = logger;
             _config = config;
             _jwtHelper = jwtHelper;
+            _openAIContext = openAIContext;
+            _mapper = mapper;
         }
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginDto loginDto)
+        public async Task<IActionResult> Login(AuthenticateUserReq req)
         {
-            var user = await AuthenticateUser(loginDto);
+            var user = await AuthenticateUser(req);
+            if (user == null)
+                return Unauthorized();
 
-            if (user != null)
-            {
-                //var tokenString = GenerateJSONWebToken(user);
-                var tokenString = _jwtHelper.GenerateToken(user.Username);
-                return Ok(new { Token = tokenString });
-            }
-
-            return Unauthorized();
+            var tokenString = _jwtHelper.GenerateToken(user.Account);
+            return Response<string>.Ok(tokenString);
         }
 
         [HttpPost("refresh")]
@@ -48,15 +52,15 @@ namespace OpenAIService.Controllers
             {
                 // 解析 JWT Token
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_config["Jwt:Key"]);
+                var key = Encoding.ASCII.GetBytes(_config["JwtSettings:SignKey"]);
                 var validationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = true,
-                    ValidIssuer = _config["Jwt:Issuer"],
-                    ValidateAudience = true,
-                    ValidAudience = _config["Jwt:Audience"],
+                    ValidIssuer = _config["JwtSettings:Issuer"],
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero // 取消時鐘漂移
                 };
                 var claimsPrincipal = tokenHandler.ValidateToken(refreshToken, validationParameters, out var securityToken);
@@ -65,66 +69,31 @@ namespace OpenAIService.Controllers
                 var newTokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = claimsPrincipal.Identity as ClaimsIdentity,
-                    Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(_config["Jwt:ExpiresInMinutes"])),
+                    Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(_config["JwtSettings:ExpiresInMinutes"])),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
                 var newToken = tokenHandler.CreateToken(newTokenDescriptor);
                 var newJwtToken = tokenHandler.WriteToken(newToken);
 
-                return Ok(new { Token = newJwtToken });
+                return Response<string>.Ok(newJwtToken);
             }
             catch (SecurityTokenExpiredException)
             {
                 // JWT Token 已經過期
-                return BadRequest();
+                return Response<string>.BadRequest("JWT Expired");
             }
         }
 
-        private async Task<User> AuthenticateUser(LoginDto loginDto)
+        private async Task<UserVM> AuthenticateUser(AuthenticateUserReq req)
         {
-            // 在這裡實作驗證使用者的邏輯
-            // 如果使用者驗證成功，就返回一個代表使用者的物件，否則返回 null
-            // 在這個範例中，我們只是簡單地使用靜態資料來模擬使用者驗證
-            if (loginDto.Username == "string" && loginDto.Password == "string")
-            {
-                return new User { Username = "testuser", Email = "testuser@example.com" };
-            }
+            var userInfo = _openAIContext.User.FirstOrDefault(x => x.Account == req.Account);
+            _ = userInfo ?? throw new Exception($"User {req.Account} not found");
+
+            var password = CryptionHelper.Hash(req.Password);
+            if (userInfo.Password == password)
+                return _mapper.Map<UserVM>(userInfo);
 
             return null;
         }
-
-        private string GenerateJSONWebToken(User user)
-        {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Username),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_config["Jwt:ExpiresInMinutes"])),
-                signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-    }
-
-    public class User
-    {
-        public string Username { get; set; }
-        public string Email { get; set; }
-    }
-
-    public class LoginDto
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
     }
 }

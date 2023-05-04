@@ -11,6 +11,7 @@ using OpenAIService.Filters;
 using OpenAIService.Helpers;
 using System.IdentityModel.Tokens.Jwt;
 using OpenAIService.Middleware;
+using OpenAIService.Models;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -28,7 +29,7 @@ try
     builder.Host.UseSerilog();
     builder.Services.AddDbContext<OpenAIContext>(
             options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     #region swagger
     builder.Services.AddSwaggerGen(options =>
     {
