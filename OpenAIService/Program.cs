@@ -12,6 +12,8 @@ using OpenAIService.Helpers;
 using System.IdentityModel.Tokens.Jwt;
 using OpenAIService.Middleware;
 using OpenAIService.Models;
+using OpenAI_API;
+using Microsoft.Extensions.DependencyInjection;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -30,6 +32,8 @@ try
     builder.Services.AddDbContext<OpenAIContext>(
             options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+    builder.Services.AddSingleton(
+        options => new OpenAIAPI(builder.Configuration.GetValue<string>("OpenAIAPIKey")));
     #region swagger
     builder.Services.AddSwaggerGen(options =>
     {
