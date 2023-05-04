@@ -1,6 +1,7 @@
 ﻿using JWT.Algorithms;
 using JWT.Builder;
 using Microsoft.Extensions.Options;
+using OpenAIService.Models;
 using System.Security.Claims;
 
 namespace OpenAIService.Helpers 
@@ -9,7 +10,8 @@ namespace OpenAIService.Helpers
   public class JwtHelper {
     private readonly JwtSettingsOptions _settings;
 
-    public JwtHelper(IOptionsMonitor<JwtSettingsOptions> settings) {
+    public JwtHelper(IOptionsMonitor<JwtSettingsOptions> settings) 
+    {
       _settings = settings.CurrentValue;
     }
 
@@ -18,12 +20,12 @@ namespace OpenAIService.Helpers
       var signKey = _settings.SignKey;
 
       var token = JwtBuilder.Create()
-                      .WithAlgorithm(new HMACSHA256Algorithm()) // symmetric
+                      .WithAlgorithm(new HMACSHA256Algorithm())
                       .WithSecret(signKey)
                       .AddClaim("roles", "admin")
-                      .AddClaim("jti", Guid.NewGuid().ToString()) // JWT ID
+                      .AddClaim("jti", Guid.NewGuid().ToString())
                       .AddClaim("iss", issuer)
-                      .AddClaim("sub", userName) // User.Identity.Name
+                      .AddClaim("sub", userName)
                       .AddClaim("exp", DateTimeOffset.UtcNow.AddMinutes(expireMinutes).ToUnixTimeSeconds())
                       .AddClaim("nbf", DateTimeOffset.UtcNow.ToUnixTimeSeconds())
                       .AddClaim("iat", DateTimeOffset.UtcNow.ToUnixTimeSeconds())
@@ -31,9 +33,5 @@ namespace OpenAIService.Helpers
                       .Encode();
       return token;
     }
-  }
-  public class JwtSettingsOptions {
-    public string Issuer { get; set; } = "";
-    public string SignKey { get; set; } = "";
   }
 }

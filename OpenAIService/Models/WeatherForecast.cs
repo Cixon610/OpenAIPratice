@@ -1,4 +1,4 @@
-namespace OpenAIService
+namespace OpenAIService.Models
 {
     public class WeatherForecast
     {

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OpenAIService.Models;
 
 namespace OpenAIService.Controllers
 {
@@ -21,15 +22,15 @@ namespace OpenAIService.Controllers
 
         [HttpGet(Name = "GetWeatherForecast")]
         [Authorize(Roles = "admin")]
-        public IEnumerable<WeatherForecast> Get()
+        public ObjectResult Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return Ok(Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = Random.Shared.Next(-20, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
-            .ToArray();
+            .ToArray());
         }
     }
 }

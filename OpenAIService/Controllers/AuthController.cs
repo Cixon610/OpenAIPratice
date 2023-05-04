@@ -85,7 +85,7 @@ namespace OpenAIService.Controllers
             // 在這裡實作驗證使用者的邏輯
             // 如果使用者驗證成功，就返回一個代表使用者的物件，否則返回 null
             // 在這個範例中，我們只是簡單地使用靜態資料來模擬使用者驗證
-            if (loginDto.Username == "testuser" && loginDto.Password == "testpassword")
+            if (loginDto.Username == "string" && loginDto.Password == "string")
             {
                 return new User { Username = "testuser", Email = "testuser@example.com" };
             }
