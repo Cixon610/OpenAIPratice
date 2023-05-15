@@ -5,19 +5,20 @@ using System.Collections.Generic;
 
 namespace OpenAIService.Entities
 {
-    public partial class Conversation
+    public partial class Suger
     {
-        public Conversation()
+        public Suger()
         {
-            Message = new HashSet<Message>();
+            AvailableSuger = new HashSet<AvailableSuger>();
+            OrderDetail = new HashSet<OrderDetail>();
         }
 
         public Guid Id { get; set; }
-        public Guid UserId { get; set; }
+        public string Name { get; set; }
         public DateTime CreatedDatetime { get; set; }
         public DateTime UpdateDatetime { get; set; }
 
-        public virtual User User { get; set; }
-        public virtual ICollection<Message> Message { get; set; }
+        public virtual ICollection<AvailableSuger> AvailableSuger { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }

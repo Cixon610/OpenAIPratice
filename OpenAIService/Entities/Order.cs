@@ -5,19 +5,24 @@ using System.Collections.Generic;
 
 namespace OpenAIService.Entities
 {
-    public partial class Conversation
+    public partial class Order
     {
-        public Conversation()
+        public Order()
         {
-            Message = new HashSet<Message>();
+            OrderDetail = new HashSet<OrderDetail>();
         }
 
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
+        public Guid MessageId { get; set; }
+        public int TotalValue { get; set; }
+        public int TotalCount { get; set; }
+        public string Memo { get; set; }
         public DateTime CreatedDatetime { get; set; }
         public DateTime UpdateDatetime { get; set; }
 
+        public virtual Message Message { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<Message> Message { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }

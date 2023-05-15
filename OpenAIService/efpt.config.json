@@ -15,11 +15,79 @@
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
+         "Name": "[dbo].[AvailableIce]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AvailableSize]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AvailableSuger]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AvailableTopping]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Conversation]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Messages]",
+         "Name": "[dbo].[Ice]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[IPBlocker]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ItemStore]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[LoginLog]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MenuItem]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MenuItemType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Message]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Order]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OrderDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OrderDetailTopping]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Size]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Suger]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Topping]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ToppingStore]",
          "ObjectType": 0
       },
       {
