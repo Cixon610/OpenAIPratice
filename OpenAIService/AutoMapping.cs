@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using OpenAIService.Entities;
+using OpenAIDAL.Entities;
 using OpenAIService.ViewModels;
 
 

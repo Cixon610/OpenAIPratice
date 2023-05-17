@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using OpenAIService.Entities;
 using Serilog.Events;
 using Serilog;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -14,6 +13,7 @@ using OpenAIService.Middleware;
 using OpenAIService.Models;
 using OpenAI_API;
 using Microsoft.Extensions.DependencyInjection;
+using OpenAIDAL.Entities;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using OpenAIService.Entities;
+using OpenAIDAL.Entities;
 using OpenAIService.Helpers;
 using OpenAIService.Models.Request;
 using OpenAIService.Models.Response;
