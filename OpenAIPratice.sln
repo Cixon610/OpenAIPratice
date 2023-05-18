@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAIService", "OpenAIServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAIConsole", "OpenAIConsole\OpenAIConsole.csproj", "{146CE89D-78F5-4CD7-9FC8-C845CD7D5B41}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAIBackOffice", "OpenAIBackOffice\OpenAIBackOffice.csproj", "{4E5EF077-D28A-403F-A742-701E87673F3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAIDAL", "OpenAIDAL\OpenAIDAL.csproj", "{7CE11E1F-25C2-45B3-B0F3-39BC37780F6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenAIDAL", "OpenAIDAL\OpenAIDAL.csproj", "{7CE11E1F-25C2-45B3-B0F3-39BC37780F6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenAIBackOffice", "OpenAIBackOffice\OpenAIBackOffice.csproj", "{89E12413-0D4F-4E25-BF9C-48FAC813561A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,14 @@ Global
 		{146CE89D-78F5-4CD7-9FC8-C845CD7D5B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{146CE89D-78F5-4CD7-9FC8-C845CD7D5B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{146CE89D-78F5-4CD7-9FC8-C845CD7D5B41}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E5EF077-D28A-403F-A742-701E87673F3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E5EF077-D28A-403F-A742-701E87673F3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E5EF077-D28A-403F-A742-701E87673F3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E5EF077-D28A-403F-A742-701E87673F3D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7CE11E1F-25C2-45B3-B0F3-39BC37780F6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7CE11E1F-25C2-45B3-B0F3-39BC37780F6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CE11E1F-25C2-45B3-B0F3-39BC37780F6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CE11E1F-25C2-45B3-B0F3-39BC37780F6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89E12413-0D4F-4E25-BF9C-48FAC813561A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89E12413-0D4F-4E25-BF9C-48FAC813561A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89E12413-0D4F-4E25-BF9C-48FAC813561A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89E12413-0D4F-4E25-BF9C-48FAC813561A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
