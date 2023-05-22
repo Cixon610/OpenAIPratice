@@ -14,6 +14,7 @@ using OpenAIService.Models;
 using OpenAI_API;
 using Microsoft.Extensions.DependencyInjection;
 using OpenAIDAL.Entities;
+using OpenAIDAL.Adapter;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -34,6 +35,13 @@ try
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     builder.Services.AddSingleton(
         options => new OpenAIAPI(builder.Configuration.GetValue<string>("OpenAIAPIKey")));
+
+    #region custom class
+    builder.Services.AddScoped<PromptManager>();
+    builder.Services.AddScoped<MenuAdapter>();
+
+    #endregion
+
     #region swagger
     builder.Services.AddSwaggerGen(options =>
     {

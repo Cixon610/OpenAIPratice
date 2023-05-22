@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAIConsole", "OpenAICons
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAIBackOffice", "OpenAIBackOffice\OpenAIBackOffice.csproj", "{4E5EF077-D28A-403F-A742-701E87673F3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenAIDAL", "OpenAIDAL\OpenAIDAL.csproj", "{7CE11E1F-25C2-45B3-B0F3-39BC37780F6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAIDAL", "OpenAIDAL\OpenAIDAL.csproj", "{7CE11E1F-25C2-45B3-B0F3-39BC37780F6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OpenAI_API;
 using OpenAI_API.Chat;
+using OpenAIDAL.Adapter;
+using OpenAIDAL.Entities;
+using OpenAIService.Helpers;
 
 namespace OpenAIService.Controllers
 {
@@ -8,7 +11,13 @@ namespace OpenAIService.Controllers
     [Route("[controller]")]
     public class OpenAIController : Controller
     {
-        [HttpGet(Name = "TestAI")]
+        private readonly MenuAdapter _menuAdapter;
+
+        public OpenAIController(MenuAdapter MenuAdapter)
+        {
+            _menuAdapter = MenuAdapter;
+        }
+        [HttpGet("TestAI")]
         public async Task TestAI()
         {
             var api = new OpenAIAPI("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");
@@ -38,6 +47,12 @@ namespace OpenAIService.Controllers
             {
                 Console.WriteLine($"{msg.Role}: {msg.Content}");
             }
+        }
+
+        [HttpGet("TestFunction")]
+        public void TestFunction()
+        {
+            var a = _menuAdapter.GetMenu();
         }
     }
 }
