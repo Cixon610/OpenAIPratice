@@ -286,9 +286,7 @@ namespace OpenAIDAL.Entities
 
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200);
+                entity.Property(e => e.Description).HasMaxLength(200);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
