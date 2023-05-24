@@ -9,11 +9,12 @@ namespace OpenAIDAL.VirtualObjects
 {
     public class MenuVO
     {
+        public Guid ItemID { get; internal set; }
         public string ItemName { get; set; }
         public string ItemType { get; set; }
         public List<string> AvailableIce { get; set; }
         public List<string> AvailableSuger { get; set; }
-        public Dictionary<string, int> AvailableSize { get; set; }
+        public List<AvailableSizeV> AvailableSize { get; set; }
         public Dictionary<string, int> AvailableToppings { get; set; }
     }
 }

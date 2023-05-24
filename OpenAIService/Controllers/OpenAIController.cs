@@ -12,10 +12,12 @@ namespace OpenAIService.Controllers
     public class OpenAIController : Controller
     {
         private readonly MenuAdapter _menuAdapter;
+        private readonly PromptManager _promptManager;
 
-        public OpenAIController(MenuAdapter MenuAdapter)
+        public OpenAIController(MenuAdapter MenuAdapter, PromptManager PromptManager)
         {
             _menuAdapter = MenuAdapter;
+            _promptManager = PromptManager;
         }
         [HttpGet("TestAI")]
         public async Task TestAI()
@@ -52,7 +54,7 @@ namespace OpenAIService.Controllers
         [HttpGet("TestFunction")]
         public void TestFunction()
         {
-            var a = _menuAdapter.GetMenu();
+            var a = _promptManager.GetMenu();
         }
     }
 }

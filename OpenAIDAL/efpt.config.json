@@ -93,6 +93,10 @@
       {
          "Name": "[dbo].[User]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AvailableSize_v]",
+         "ObjectType": 3
       }
    ],
    "UiHint": "(LocalDB)\\MSSQLLocalDB.OpenAI",

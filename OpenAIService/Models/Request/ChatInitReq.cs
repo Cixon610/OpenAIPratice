@@ -1,6 +1,6 @@
 ﻿namespace OpenAIService.Models.Request
 {
-    public class ChatInitReq
+    public class ChatCreateReq
     {
         public string UserID { get; set; }
     }

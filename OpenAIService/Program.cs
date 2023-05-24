@@ -15,6 +15,7 @@ using OpenAI_API;
 using Microsoft.Extensions.DependencyInjection;
 using OpenAIDAL.Entities;
 using OpenAIDAL.Adapter;
+using OpenAIService.Services;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -39,6 +40,8 @@ try
     #region custom class
     builder.Services.AddScoped<PromptManager>();
     builder.Services.AddScoped<MenuAdapter>();
+    builder.Services.AddScoped<ChatAdapter>();
+    builder.Services.AddScoped<ChatService>();
 
     #endregion
 

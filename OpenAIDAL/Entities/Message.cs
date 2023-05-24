@@ -14,6 +14,7 @@ namespace OpenAIDAL.Entities
 
         public Guid Id { get; set; }
         public Guid ConversationId { get; set; }
+        public string Role { get; set; }
         public string Message1 { get; set; }
         public int OrderId { get; set; }
         public DateTime CreatedDatetime { get; set; }

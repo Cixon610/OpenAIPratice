@@ -19,28 +19,9 @@ namespace OpenAIDAL.Adapter
         {
             _openAIContext = openAIContext;
         }
-        public List<MenuVO> GetMenu()
-        {
-            var menuList = _openAIContext.MenuItem.Include(x => x.MenuItemType).Select(item =>
-                    new MenuVO
-                    {
-                        ItemName = item.Name,
-                        ItemType = item.MenuItemType.Name,
-                        AvailableIce = _openAIContext.Ice
-                                            .Where(y => _openAIContext.AvailableIce.Any(z => z.IceId == y.Id))
-                                            .Select(x => x.Name)
-                                            .ToList(),
-                        AvailableSuger = _openAIContext.Suger
-                                            .Where(y => _openAIContext.AvailableSuger.Any(z => z.SugerId == y.Id))
-                                            .Select(x => x.Name)
-                                            .ToList(),
-                        //AvailableSize = _openAIContext.AvailableSize
-                        //                    .Where(x => x.MenuItemId == item.Id)
-                        //                    .LeftJoin(_openAIContext.Size, x => x.SizeId, y => y.Id, (a, s) => new { s.Name, a.Value })
-                        //                    .ToDictionary(x=>x.Name, x => x.Value)
-                    }).ToList();
-            return menuList;
-        }
+        //public Dictionary<string, IEnumerable<AvailableSizeV>> GetMenu() =>
+        //    _openAIContext.AvailableSizeV.GroupBy(x => x.Item).ToDictionary(x=>x.Key,y=> y.Select(z=>z));
 
+        public List<AvailableSizeV> GetMenu() =>  _openAIContext.AvailableSizeV.ToList();
     }
 }

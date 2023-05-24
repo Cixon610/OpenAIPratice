@@ -20,6 +20,7 @@ namespace OpenAIDAL.Entities
 
         public virtual DbSet<AvailableIce> AvailableIce { get; set; }
         public virtual DbSet<AvailableSize> AvailableSize { get; set; }
+        public virtual DbSet<AvailableSizeV> AvailableSizeV { get; set; }
         public virtual DbSet<AvailableSuger> AvailableSuger { get; set; }
         public virtual DbSet<AvailableTopping> AvailableTopping { get; set; }
         public virtual DbSet<Conversation> Conversation { get; set; }
@@ -87,6 +88,23 @@ namespace OpenAIDAL.Entities
                     .HasForeignKey(d => d.SizeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_AvailableSize_Size");
+            });
+
+            modelBuilder.Entity<AvailableSizeV>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("AvailableSize_v");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Item)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Size)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<AvailableSuger>(entity =>
@@ -310,6 +328,11 @@ namespace OpenAIDAL.Entities
                     .HasColumnName("Message");
 
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
+
+                entity.Property(e => e.Role)
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
 
