@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace OpenAIService.Models.Response
 {
-    public class Response<T>
+    public class ResponseBase<T>
     {
         public T? Data { get; set; }
         [JsonIgnore]
@@ -12,15 +12,15 @@ namespace OpenAIService.Models.Response
         public IEnumerable<string>? Errors { get; set; }
 
         public static OkObjectResult Ok(T data) => 
-             new OkObjectResult( new Response<T> { Data = data });
+             new OkObjectResult( new ResponseBase<T> { Data = data });
 
         public static BadRequestObjectResult BadRequest(T data) => 
-            new BadRequestObjectResult( new Response<T> { Data = data });
+            new BadRequestObjectResult( new ResponseBase<T> { Data = data });
 
         public static ObjectResult FailExceotion(string errorMessage, IEnumerable<string> errors = null)
         {
             var res = new ObjectResult(
-                new Response<T>
+                new ResponseBase<T>
                 {
                     ErrorMessage = errorMessage,
                     Errors = errors

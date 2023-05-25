@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OpenAI_API;
 using OpenAI_API.Chat;
-using OpenAIDAL.Entities;
 using OpenAIService.Helpers;
 using OpenAIService.Models.Request;
 using OpenAIService.Models.Response;
@@ -44,20 +42,20 @@ namespace OpenAIService.Controllers
 
             var menuPrompt = _promptManager.GetMenu();
             var (conversationID, initMessageID) = _chatService.InitChat(Guid.Parse(req.UserID), menuPrompt);
-            var response = "歡迎光臨請問要甚麼飲料?";
+            var aiRes = "歡迎光臨請問要甚麼飲料?";
 
-            var messageID = _chatService.AddMessage(conversationID, response, 1, "agent");
+            var messageID = _chatService.AddMessage(conversationID, aiRes, 1, "assistant");
             var res = new MessageResponse
             {
                 ConversationID = conversationID,
                 Messages = new MessageRes
                 {
                     ID = messageID,
-                    Value = response,
+                    Value = aiRes,
                     OrderID = 1
                 },
             };
-            return Response<MessageResponse>.Ok(res);
+            return ResponseBase<MessageResponse>.Ok(res);
         }
         /// <summary>
         /// Send Message
@@ -72,20 +70,24 @@ namespace OpenAIService.Controllers
                 Temperature = 0.5,
                 MaxTokens = 50,
             });
+
             var msgs = _chatService.GetMessages(req.ConversationID);
-            foreach(var msg in msgs)
+            var newMsgID = _promptManager.ComposeNewMsg(chat, msgs, req.Message, req.ConversationID);
+            var aiRes = chat.GetResponseFromChatbotAsync().Result;
+            var orderID = msgs.Count + 1;
+            _chatService.AddMessage(req.ConversationID, aiRes, orderID, ChatMessageRole.Assistant.ToString());
+            var res = new MessageResponse
             {
-                switch (msg.Role)
+                ConversationID = req.ConversationID,
+                Messages = new MessageRes
                 {
-                    case "system":
-                        //TODO:加進對應的Function
-                        break;
-                    default:
-                        break;
-                }
-            }
-            //chat.AppendSystemMessage(menuPrompt);
-            return null;
+                    ID = newMsgID,
+                    Value = aiRes,
+                    OrderID = orderID
+                },
+            };
+
+            return ResponseBase<MessageResponse>.Ok(res);
         }
     }
 }

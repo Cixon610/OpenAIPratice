@@ -41,7 +41,7 @@ namespace OpenAIService.Controllers
                 return Unauthorized();
 
             var tokenString = _jwtHelper.GenerateToken(user.Account);
-            return Response<string>.Ok(tokenString);
+            return ResponseBase<string>.Ok(tokenString);
         }
 
         [HttpPost("refresh")]
@@ -75,12 +75,12 @@ namespace OpenAIService.Controllers
                 var newToken = tokenHandler.CreateToken(newTokenDescriptor);
                 var newJwtToken = tokenHandler.WriteToken(newToken);
 
-                return Response<string>.Ok(newJwtToken);
+                return ResponseBase<string>.Ok(newJwtToken);
             }
             catch (SecurityTokenExpiredException)
             {
                 // JWT Token 已經過期
-                return Response<string>.BadRequest("JWT Expired");
+                return ResponseBase<string>.BadRequest("JWT Expired");
             }
         }
 
