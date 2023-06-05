@@ -3,13 +3,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAIDAL.Entities
+namespace OpenAIDAL.MySql.Entities
 {
-    public partial class AvailableSizeV
+    public partial class Availablesize
     {
-        public Guid Id { get; set; }
-        public string Item { get; set; }
-        public string Size { get; set; }
+        public string Id { get; set; }
+        public string MenuItemId { get; set; }
+        public string Name { get; set; }
         public int Value { get; set; }
     }
 }

@@ -8,7 +8,7 @@
         /// <summary>
         /// 會話ID
         /// </summary>
-        public Guid ConversationID { get; set; }
+        public string ConversationID { get; set; }
         /// <summary>
         /// 訊息
         /// </summary>
@@ -23,7 +23,7 @@
         /// <summary>
         /// 訊息ID
         /// </summary>
-        public Guid ID { get; set; }
+        public string ID { get; set; }
         /// <summary>
         /// 訊息內容
         /// </summary>

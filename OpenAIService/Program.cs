@@ -13,9 +13,12 @@ using OpenAIService.Middleware;
 using OpenAIService.Models;
 using OpenAI_API;
 using Microsoft.Extensions.DependencyInjection;
-using OpenAIDAL.Entities;
 using OpenAIDAL.Adapter;
 using OpenAIService.Services;
+using Microsoft.Extensions.Configuration;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using OpenAIDAL.MySql.Entities;
+using System.Data.Common;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -31,11 +34,18 @@ try
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Host.UseSerilog();
-    builder.Services.AddDbContext<OpenAIContext>(
-            options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     builder.Services.AddSingleton(
         options => new OpenAIAPI(builder.Configuration.GetValue<string>("OpenAIAPIKey")));
+
+    #region DB
+    //MSSQL
+    //builder.Services.AddDbContext<OpenAIContext>(
+    //        options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+    builder.Services.AddDbContext<OrderGPTContext>(options =>
+        options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnection"), ServerVersion.Parse("8.0.33")));
+    #endregion
 
     #region custom class
     builder.Services.AddScoped<PromptManager>();
@@ -118,16 +128,17 @@ try
     #endregion
 
     var app = builder.Build();
-
     app.UseMiddleware<ExceptionHandlerMiddleware>();
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
     }
-    app.UseHttpsRedirection();
+    //app.UseHttpsRedirection();
     app.UseAuthentication();
     app.UseAuthorization();
+    //JwtMiddleware需在useAuthentication之後
+    app.UseMiddleware<JwtMiddleware>();
     app.MapControllers();
     app.Run();
 }

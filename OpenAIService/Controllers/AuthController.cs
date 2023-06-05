@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using OpenAIDAL.Entities;
+using OpenAIDAL.MySql.Entities;
 using OpenAIService.Helpers;
 using OpenAIService.Models.Request;
 using OpenAIService.Models.Response;
@@ -20,10 +20,10 @@ namespace OpenAIService.Controllers
         private readonly ILogger<AuthController> _logger;
         private readonly IConfiguration _config;
         private readonly JwtHelper _jwtHelper;
-        private readonly OpenAIContext _openAIContext;
+        private readonly OrderGPTContext _openAIContext;
         private readonly IMapper _mapper;
 
-        public AuthController(ILogger<AuthController> logger, IConfiguration config, JwtHelper jwtHelper, OpenAIContext openAIContext, IMapper mapper)
+        public AuthController(ILogger<AuthController> logger, IConfiguration config, JwtHelper jwtHelper, OrderGPTContext openAIContext, IMapper mapper)
         {
             _logger = logger;
             _config = config;
@@ -40,7 +40,7 @@ namespace OpenAIService.Controllers
             if (user == null)
                 return Unauthorized();
 
-            var tokenString = _jwtHelper.GenerateToken(user.Account);
+            var tokenString = _jwtHelper.GenerateToken(user.Account,user.Id);
             return ResponseBase<string>.Ok(tokenString);
         }
 

@@ -15,7 +15,7 @@ namespace OpenAIService.Helpers
       _settings = settings.CurrentValue;
     }
 
-    public string GenerateToken(string userName, int expireMinutes = 0) {
+    public string GenerateToken(string userName, string uid,int expireMinutes = 0) {
       expireMinutes = expireMinutes == 0 ? _settings.ExpiresInMinutes : expireMinutes;
       var token = JwtBuilder.Create()
                       .WithAlgorithm(new HMACSHA256Algorithm())
@@ -27,7 +27,8 @@ namespace OpenAIService.Helpers
                       .AddClaim("exp", DateTimeOffset.UtcNow.AddMinutes(expireMinutes).ToUnixTimeSeconds())
                       //.AddClaim("nbf", DateTimeOffset.UtcNow.ToUnixTimeSeconds())
                       //.AddClaim("iat", DateTimeOffset.UtcNow.ToUnixTimeSeconds())
-                      .AddClaim(ClaimTypes.Name, userName)
+                      .AddClaim("un", userName)
+                      .AddClaim("uid", uid)
                       .Encode();
       return token;
     }

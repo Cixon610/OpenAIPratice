@@ -10,10 +10,5 @@ namespace OpenAIDAL.Entities
         public Guid Id { get; set; }
         public Guid MenuItemId { get; set; }
         public Guid ToppingId { get; set; }
-        public DateTime CreatedDatetime { get; set; }
-        public DateTime UpdateDatetime { get; set; }
-
-        public virtual MenuItem MenuItem { get; set; }
-        public virtual Topping Topping { get; set; }
     }
 }

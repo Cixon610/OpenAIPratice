@@ -1,17 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OpenAI_API;
 using OpenAI_API.Chat;
 using OpenAIService.Helpers;
 using OpenAIService.Models.Request;
 using OpenAIService.Models.Response;
 using OpenAIService.Services;
+using System.Security.Claims;
 
 namespace OpenAIService.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [Route("[controller]")]
-    public class ChatController : ControllerBase
+    public class ChatController : ApiBaseController
     {
         private readonly ILogger<ChatController> _logger;
         private readonly OpenAIAPI _openAI;
@@ -32,7 +34,7 @@ namespace OpenAIService.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("create")]
-        public IActionResult Create(ChatCreateReq req)
+        public IActionResult Create()
         {
             var chat = _openAI.Chat.CreateConversation(new ChatRequest()
             {
@@ -41,7 +43,7 @@ namespace OpenAIService.Controllers
             });
 
             var menuPrompt = _promptManager.GetMenu();
-            var (conversationID, initMessageID) = _chatService.InitChat(Guid.Parse(req.UserID), menuPrompt);
+            var (conversationID, initMessageID) = _chatService.InitChat(base.UserId, menuPrompt);
             var aiRes = "歡迎光臨請問要甚麼飲料?";
 
             var messageID = _chatService.AddMessage(conversationID, aiRes, 1, "assistant");

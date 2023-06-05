@@ -1,0 +1,105 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "OrderGPTContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Entities",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "OpenAIDAL.MySql",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "availableice",
+         "ObjectType": 0
+      },
+      {
+         "Name": "availablesize",
+         "ObjectType": 0
+      },
+      {
+         "Name": "availablesuger",
+         "ObjectType": 0
+      },
+      {
+         "Name": "availabletopping",
+         "ObjectType": 0
+      },
+      {
+         "Name": "conversation",
+         "ObjectType": 0
+      },
+      {
+         "Name": "ipblocker",
+         "ObjectType": 0
+      },
+      {
+         "Name": "itemstore",
+         "ObjectType": 0
+      },
+      {
+         "Name": "loginlog",
+         "ObjectType": 0
+      },
+      {
+         "Name": "menuitem",
+         "ObjectType": 0
+      },
+      {
+         "Name": "menuitemtype",
+         "ObjectType": 0
+      },
+      {
+         "Name": "message",
+         "ObjectType": 0
+      },
+      {
+         "Name": "order",
+         "ObjectType": 0
+      },
+      {
+         "Name": "orderdetail",
+         "ObjectType": 0
+      },
+      {
+         "Name": "orderdetailtopping",
+         "ObjectType": 0
+      },
+      {
+         "Name": "topping",
+         "ObjectType": 0
+      },
+      {
+         "Name": "toppingstore",
+         "ObjectType": 0
+      },
+      {
+         "Name": "user",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "mysql.ordergpt",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

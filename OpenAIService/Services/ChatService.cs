@@ -1,5 +1,5 @@
 ﻿using OpenAIDAL.Adapter;
-using OpenAIDAL.Entities;
+using OpenAIDAL.MySql.Entities;
 
 namespace OpenAIService.Services
 {
@@ -11,19 +11,19 @@ namespace OpenAIService.Services
             _chatAdapter = ChatAdapter;
         }
 
-        public (Guid, Guid) InitChat(Guid userId, string Message)
+        public (string, string) InitChat(string userId, string Message)
         {
             var conversationID = _chatAdapter.AddConversation(userId);
             var messageID = _chatAdapter.AddMessage(conversationID, Message, 0, "system");
             return (conversationID, messageID);
         }
 
-        public Guid AddMessage(Guid conversationID, string message, int orderID, string role)
+        public string AddMessage(string conversationID, string message, int orderID, string role)
         {
             return _chatAdapter.AddMessage(conversationID, message, orderID, role);
         }
 
-        public List<Message> GetMessages(Guid conversationID)
+        public List<Message> GetMessages(string conversationID)
         {
             return _chatAdapter.GetMessages(conversationID);
 

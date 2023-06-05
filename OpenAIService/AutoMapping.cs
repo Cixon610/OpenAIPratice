@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using OpenAIDAL.Entities;
+using OpenAIDAL.MySql.Entities;
 using OpenAIService.ViewModels;
 
 

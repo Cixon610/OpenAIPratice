@@ -2,7 +2,7 @@
 using OpenAI_API;
 using OpenAI_API.Chat;
 using OpenAIDAL.Adapter;
-using OpenAIDAL.Entities;
+using OpenAIDAL.MySql.Entities;
 using OpenAIService.Helpers;
 
 namespace OpenAIService.Controllers

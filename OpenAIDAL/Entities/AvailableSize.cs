@@ -8,11 +8,8 @@ namespace OpenAIDAL.Entities
     public partial class AvailableSize
     {
         public int Id { get; set; }
-        public Guid SizeId { get; set; }
         public Guid MenuItemId { get; set; }
+        public string Name { get; set; }
         public int Value { get; set; }
-
-        public virtual MenuItem MenuItem { get; set; }
-        public virtual Size Size { get; set; }
     }
 }

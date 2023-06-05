@@ -7,17 +7,10 @@ namespace OpenAIDAL.Entities
 {
     public partial class MenuItemType
     {
-        public MenuItemType()
-        {
-            MenuItem = new HashSet<MenuItem>();
-        }
-
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime CreatedDatetime { get; set; }
         public DateTime UpdateDatetime { get; set; }
-
-        public virtual ICollection<MenuItem> MenuItem { get; set; }
     }
 }

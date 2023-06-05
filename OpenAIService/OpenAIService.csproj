@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenAIDAL\OpenAIDAL.csproj" />
+    <ProjectReference Include="..\OpenAIDAL.MySql\OpenAIDAL.MySql.csproj" />
   </ItemGroup>
 
 </Project>

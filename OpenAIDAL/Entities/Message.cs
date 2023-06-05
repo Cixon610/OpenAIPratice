@@ -7,11 +7,6 @@ namespace OpenAIDAL.Entities
 {
     public partial class Message
     {
-        public Message()
-        {
-            Order = new HashSet<Order>();
-        }
-
         public Guid Id { get; set; }
         public Guid ConversationId { get; set; }
         public string Role { get; set; }
@@ -19,8 +14,5 @@ namespace OpenAIDAL.Entities
         public int OrderId { get; set; }
         public DateTime CreatedDatetime { get; set; }
         public DateTime UpdateDatetime { get; set; }
-
-        public virtual Conversation Conversation { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
     }
 }

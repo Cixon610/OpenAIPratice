@@ -20,11 +20,9 @@ namespace OpenAIDAL.Entities
 
         public virtual DbSet<AvailableIce> AvailableIce { get; set; }
         public virtual DbSet<AvailableSize> AvailableSize { get; set; }
-        public virtual DbSet<AvailableSizeV> AvailableSizeV { get; set; }
         public virtual DbSet<AvailableSuger> AvailableSuger { get; set; }
         public virtual DbSet<AvailableTopping> AvailableTopping { get; set; }
         public virtual DbSet<Conversation> Conversation { get; set; }
-        public virtual DbSet<Ice> Ice { get; set; }
         public virtual DbSet<Ipblocker> Ipblocker { get; set; }
         public virtual DbSet<ItemStore> ItemStore { get; set; }
         public virtual DbSet<LoginLog> LoginLog { get; set; }
@@ -34,8 +32,6 @@ namespace OpenAIDAL.Entities
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<OrderDetailTopping> OrderDetailTopping { get; set; }
-        public virtual DbSet<Size> Size { get; set; }
-        public virtual DbSet<Suger> Suger { get; set; }
         public virtual DbSet<Topping> Topping { get; set; }
         public virtual DbSet<ToppingStore> ToppingStore { get; set; }
         public virtual DbSet<User> User { get; set; }
@@ -44,166 +40,78 @@ namespace OpenAIDAL.Entities
         {
             modelBuilder.Entity<AvailableIce>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
-                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
-
-                entity.Property(e => e.IceId).HasColumnName("IceID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.MenuItemId).HasColumnName("MenuItemID");
 
-                entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Ice)
-                    .WithMany(p => p.AvailableIce)
-                    .HasForeignKey(d => d.IceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AvailableIce_Ice");
-
-                entity.HasOne(d => d.MenuItem)
-                    .WithMany(p => p.AvailableIce)
-                    .HasForeignKey(d => d.MenuItemId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AvailableIce_MenuItem");
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(10);
             });
 
             modelBuilder.Entity<AvailableSize>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.HasNoKey();
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.MenuItemId).HasColumnName("MenuItemID");
 
-                entity.Property(e => e.SizeId).HasColumnName("SizeID");
-
-                entity.HasOne(d => d.MenuItem)
-                    .WithMany(p => p.AvailableSize)
-                    .HasForeignKey(d => d.MenuItemId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AvailableSize_MenuItem");
-
-                entity.HasOne(d => d.Size)
-                    .WithMany(p => p.AvailableSize)
-                    .HasForeignKey(d => d.SizeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AvailableSize_Size");
-            });
-
-            modelBuilder.Entity<AvailableSizeV>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("AvailableSize_v");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Item)
+                entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Size)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(10);
             });
 
             modelBuilder.Entity<AvailableSuger>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
-                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.MenuItemId).HasColumnName("MenuItemID");
 
-                entity.Property(e => e.SugerId).HasColumnName("SugerID");
-
-                entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.MenuItem)
-                    .WithMany(p => p.AvailableSuger)
-                    .HasForeignKey(d => d.MenuItemId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AvailableSuger_MenuItem");
-
-                entity.HasOne(d => d.Suger)
-                    .WithMany(p => p.AvailableSuger)
-                    .HasForeignKey(d => d.SugerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AvailableSuger_Suger");
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(10);
             });
 
             modelBuilder.Entity<AvailableTopping>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
-                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.MenuItemId).HasColumnName("MenuItemID");
 
                 entity.Property(e => e.ToppingId).HasColumnName("ToppingID");
-
-                entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.MenuItem)
-                    .WithMany(p => p.AvailableTopping)
-                    .HasForeignKey(d => d.MenuItemId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AvailableTopping_MenuItem");
-
-                entity.HasOne(d => d.Topping)
-                    .WithMany(p => p.AvailableTopping)
-                    .HasForeignKey(d => d.ToppingId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AvailableTopping_Topping");
             });
 
             modelBuilder.Entity<Conversation>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Conversation)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Conversation_User");
-            });
-
-            modelBuilder.Entity<Ice>(entity =>
-            {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Ipblocker>(entity =>
             {
+                entity.HasNoKey();
+
                 entity.ToTable("IPBlocker");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Ipaddress)
                     .IsRequired()
@@ -213,38 +121,24 @@ namespace OpenAIDAL.Entities
                 entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Ipblocker)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_IPBlocker_User");
             });
 
             modelBuilder.Entity<ItemStore>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.MenuItemId).HasColumnName("MenuItemID");
 
                 entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.MenuItem)
-                    .WithMany(p => p.ItemStore)
-                    .HasForeignKey(d => d.MenuItemId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ItemStore_MenuItem");
             });
 
             modelBuilder.Entity<LoginLog>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.CountryCode)
                     .IsRequired()
@@ -257,6 +151,8 @@ namespace OpenAIDAL.Entities
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.Id).HasColumnName("ID");
+
                 entity.Property(e => e.Ipaddress)
                     .IsRequired()
                     .HasMaxLength(20)
@@ -265,21 +161,15 @@ namespace OpenAIDAL.Entities
                 entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.LoginLog)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_LoginLog_User");
             });
 
             modelBuilder.Entity<MenuItem>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.MenuItemTypeId).HasColumnName("MenuItemTypeID");
 
@@ -288,23 +178,17 @@ namespace OpenAIDAL.Entities
                     .HasMaxLength(50);
 
                 entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.MenuItemType)
-                    .WithMany(p => p.MenuItem)
-                    .HasForeignKey(d => d.MenuItemTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MenuItem_MenuItem");
             });
 
             modelBuilder.Entity<MenuItemType>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -315,13 +199,13 @@ namespace OpenAIDAL.Entities
 
             modelBuilder.Entity<Message>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.ConversationId).HasColumnName("ConversationID");
 
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Message1)
                     .IsRequired()
@@ -335,21 +219,15 @@ namespace OpenAIDAL.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Conversation)
-                    .WithMany(p => p.Message)
-                    .HasForeignKey(d => d.ConversationId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Message_Conversation");
             });
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Memo)
                     .IsRequired()
@@ -360,29 +238,19 @@ namespace OpenAIDAL.Entities
                 entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.Message)
-                    .WithMany(p => p.Order)
-                    .HasForeignKey(d => d.MessageId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Order_Message");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Order)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Order_User");
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
 
-                entity.Property(e => e.IceId).HasColumnName("IceID");
+                entity.Property(e => e.Ice)
+                    .IsRequired()
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Memo)
                     .IsRequired()
@@ -390,44 +258,24 @@ namespace OpenAIDAL.Entities
 
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
 
-                entity.Property(e => e.SizeId).HasColumnName("SizeID");
+                entity.Property(e => e.Size)
+                    .IsRequired()
+                    .HasMaxLength(10);
 
-                entity.Property(e => e.SugerId).HasColumnName("SugerID");
+                entity.Property(e => e.Suger)
+                    .IsRequired()
+                    .HasMaxLength(10);
 
                 entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Ice)
-                    .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.IceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_Ice");
-
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.OrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_Order");
-
-                entity.HasOne(d => d.Size)
-                    .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.SizeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_Size");
-
-                entity.HasOne(d => d.Suger)
-                    .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.SugerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_Suger");
             });
 
             modelBuilder.Entity<OrderDetailTopping>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Memo)
                     .IsRequired()
@@ -438,57 +286,15 @@ namespace OpenAIDAL.Entities
                 entity.Property(e => e.ToppingId).HasColumnName("ToppingID");
 
                 entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.OrderDetail)
-                    .WithMany(p => p.OrderDetailTopping)
-                    .HasForeignKey(d => d.OrderDetailId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetailTopping_OrderDetail");
-
-                entity.HasOne(d => d.Topping)
-                    .WithMany(p => p.OrderDetailTopping)
-                    .HasForeignKey(d => d.ToppingId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetailTopping_Topping");
-            });
-
-            modelBuilder.Entity<Size>(entity =>
-            {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<Suger>(entity =>
-            {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Topping>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -499,34 +305,28 @@ namespace OpenAIDAL.Entities
 
             modelBuilder.Entity<ToppingStore>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.ToppingId).HasColumnName("ToppingID");
 
                 entity.Property(e => e.UpdateDatetime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Topping)
-                    .WithMany(p => p.ToppingStore)
-                    .HasForeignKey(d => d.ToppingId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ToppingStore_Topping");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasNoKey();
 
                 entity.Property(e => e.Account)
                     .IsRequired()
                     .HasMaxLength(50);
 
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name)
                     .IsRequired()

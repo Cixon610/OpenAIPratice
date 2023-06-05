@@ -1,6 +1,6 @@
 ﻿using OpenAI_API.Chat;
 using OpenAIDAL.Adapter;
-using OpenAIDAL.Entities;
+using OpenAIDAL.MySql.Entities;
 using System.Text;
 
 namespace OpenAIService.Helpers
@@ -11,7 +11,7 @@ namespace OpenAIService.Helpers
         private readonly MenuAdapter _menuAdapter;
         private readonly ChatAdapter _chatAdapter;
         //TODO:需要限制只能點選菜單上的選項極甜度冰塊，如果客戶回答的不在清單內需反覆確認或選取最接近的選項
-        private readonly string _sysPrompt = "你是飲料店員，請依據下方提供的菜單為客人點餐並反覆詢問最多十次至客人明確給予品名、數量、甜度、冰塊後，並計算總金額與客戶再次確認點選餐點，最後確認訂單後請回覆訂單發送中請稍後...";
+        private readonly string _sysPrompt = "你是飲料店員，只能依據下方提供的菜單為客人點餐並反覆詢至客人明確給予品名、數量、甜度、冰塊後，並計算總金額與客戶再次確認點選餐點，最後確認訂單後請回覆\"訂單發送中請稍後...\";若客人點選餐點並不存在於菜單中，請隨機推薦菜單內有的餐點給客人";
         
         public PromptManager(MenuAdapter MenuAdapter, ChatAdapter chatAdapter)
         {
@@ -24,19 +24,25 @@ namespace OpenAIService.Helpers
         {
             var strBuilder = new StringBuilder();
             var menuItem = _menuAdapter.GetMenu();
-            menuItem = menuItem.GetRange(0, 10);
-
-            strBuilder.Append($"{_sysPrompt};{GetAvailableICE()};{GetAvailableSuger()};");
+            //先撈前十筆測試
+            //menuItem = menuItem.GetRange(0, 10);
+            //TODO:不同飲品改撈DB值，在確認怎麼省token量
+            strBuilder.Append($"{_sysPrompt};{GetAvailableICE()};{GetAvailableSuger()};{Environment.NewLine}");
             strBuilder.Append($"菜單:{Environment.NewLine}");
-            strBuilder.Append($"品名, 大小, 價錢{Environment.NewLine}");
+            strBuilder.Append($"品名, [大小:價錢;]{Environment.NewLine}");
             foreach ( var item in menuItem )
             {
-                strBuilder.Append( $"{item.Item},{item.Size},{item.Value}{Environment.NewLine}");
+                strBuilder.Append($"{item.ItemName},[");
+                foreach( var size in item.AvailableSize)
+                {
+                    strBuilder.Append($"{size.Size}:{size.Value};");
+                }
+                strBuilder.Append($"]{Environment.NewLine}");
             }
             return strBuilder.ToString();
         }
 
-        public Guid ComposeNewMsg(OpenAI_API.Chat.Conversation chat, List<Message> msgs, string newMsg, Guid conversationID)
+        public string ComposeNewMsg(OpenAI_API.Chat.Conversation chat, List<Message> msgs, string newMsg, string conversationID)
         {
             foreach (var msg in msgs)
             {

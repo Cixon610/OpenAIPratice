@@ -35,10 +35,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Ice]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[IPBlocker]",
          "ObjectType": 0
       },
@@ -75,14 +71,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Size]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Suger]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[Topping]",
          "ObjectType": 0
       },
@@ -93,13 +81,9 @@
       {
          "Name": "[dbo].[User]",
          "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[AvailableSize_v]",
-         "ObjectType": 3
       }
    ],
-   "UiHint": "(LocalDB)\\MSSQLLocalDB.OpenAI",
+   "UiHint": "(LocalDB)\\MSSQLLocalDB.OrderGPT",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
