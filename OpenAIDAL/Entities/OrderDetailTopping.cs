@@ -14,8 +14,5 @@ namespace OpenAIDAL.Entities
         public string Memo { get; set; }
         public DateTime CreatedDatetime { get; set; }
         public DateTime UpdateDatetime { get; set; }
-
-        public virtual OrderDetail OrderDetail { get; set; }
-        public virtual Topping Topping { get; set; }
     }
 }

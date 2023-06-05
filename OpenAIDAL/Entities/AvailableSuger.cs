@@ -9,11 +9,6 @@ namespace OpenAIDAL.Entities
     {
         public Guid Id { get; set; }
         public Guid MenuItemId { get; set; }
-        public Guid SugerId { get; set; }
-        public DateTime CreatedDatetime { get; set; }
-        public DateTime UpdateDatetime { get; set; }
-
-        public virtual MenuItem MenuItem { get; set; }
-        public virtual Suger Suger { get; set; }
+        public string Name { get; set; }
     }
 }

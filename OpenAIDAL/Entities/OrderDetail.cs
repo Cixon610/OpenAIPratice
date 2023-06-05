@@ -7,25 +7,14 @@ namespace OpenAIDAL.Entities
 {
     public partial class OrderDetail
     {
-        public OrderDetail()
-        {
-            OrderDetailTopping = new HashSet<OrderDetailTopping>();
-        }
-
         public Guid Id { get; set; }
         public Guid OrderId { get; set; }
-        public Guid SizeId { get; set; }
-        public Guid SugerId { get; set; }
-        public Guid IceId { get; set; }
+        public string Size { get; set; }
+        public string Suger { get; set; }
+        public string Ice { get; set; }
         public int Value { get; set; }
         public string Memo { get; set; }
         public DateTime CreatedDatetime { get; set; }
         public DateTime UpdateDatetime { get; set; }
-
-        public virtual Ice Ice { get; set; }
-        public virtual Order Order { get; set; }
-        public virtual Size Size { get; set; }
-        public virtual Suger Suger { get; set; }
-        public virtual ICollection<OrderDetailTopping> OrderDetailTopping { get; set; }
     }
 }

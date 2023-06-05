@@ -14,7 +14,5 @@ namespace OpenAIDAL.Entities
         public string CountryCode { get; set; }
         public DateTime CreatedDatetime { get; set; }
         public DateTime UpdateDatetime { get; set; }
-
-        public virtual User User { get; set; }
     }
 }

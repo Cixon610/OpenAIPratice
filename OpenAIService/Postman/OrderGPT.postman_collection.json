@@ -1,0 +1,342 @@
+{
+	"info": {
+		"_postman_id": "663b7742-1de7-4213-a7c5-385da7be3405",
+		"name": "OrderGPT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6729966",
+		"_collection_link": "https://crimson-desert-845696.postman.co/workspace/SideProject~d00d8ea3-d73f-4ba6-bb63-5d0bcf0df355/collection/6729966-663b7742-1de7-4213-a7c5-385da7be3405?action=share&creator=6729966&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Chat",
+			"item": [
+				{
+					"name": "/Chat/create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var parsedBody = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"ConversationId\",parsedBody.data.conversationID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWTToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/Chat/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Chat",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/Chat/create",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Chat",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "/Chat/send",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWTToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ConversationID\": \"{{ConversationId}}\",\n  \"Message\": \"我要紅茶\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Chat/send",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Chat",
+								"send"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"conversationID\": \"<uuid>\",\n  \"message\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Chat/send",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Chat",
+										"send"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "/Auth/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var parsedBody = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"JWTToken\",parsedBody.data);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"account\": \"test\",\n  \"password\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"account\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "/Auth/refresh",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/Auth/refresh?refreshToken=<string>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Auth",
+								"refresh"
+							],
+							"query": [
+								{
+									"key": "refreshToken",
+									"value": "<string>"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/Auth/refresh?refreshToken=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Auth",
+										"refresh"
+									],
+									"query": [
+										{
+											"key": "refreshToken",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/"
+		},
+		{
+			"key": "bearerToken",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPcGVuQUkiLCJzdWIiOiJPcGVuQUlUZXN0MTIzNDU2IiwiZXhwIjoxNjg1OTc4NDE4LCJ1biI6InRlc3QiLCJ1aWQiOiI0MGY5MWQ2ZS0wMzhkLTExZWUtOTZlOC1lNGE4ZGZlNWVhNWQifQ.OU4q2m4D0ZEsrt8ju-iTJ5YIUjV1rMziN5wqiaaDhKo"
+		}
+	]
+}

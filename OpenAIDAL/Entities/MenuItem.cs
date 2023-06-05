@@ -7,26 +7,10 @@ namespace OpenAIDAL.Entities
 {
     public partial class MenuItem
     {
-        public MenuItem()
-        {
-            AvailableIce = new HashSet<AvailableIce>();
-            AvailableSize = new HashSet<AvailableSize>();
-            AvailableSuger = new HashSet<AvailableSuger>();
-            AvailableTopping = new HashSet<AvailableTopping>();
-            ItemStore = new HashSet<ItemStore>();
-        }
-
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Guid MenuItemTypeId { get; set; }
         public DateTime CreatedDatetime { get; set; }
         public DateTime UpdateDatetime { get; set; }
-
-        public virtual MenuItemType MenuItemType { get; set; }
-        public virtual ICollection<AvailableIce> AvailableIce { get; set; }
-        public virtual ICollection<AvailableSize> AvailableSize { get; set; }
-        public virtual ICollection<AvailableSuger> AvailableSuger { get; set; }
-        public virtual ICollection<AvailableTopping> AvailableTopping { get; set; }
-        public virtual ICollection<ItemStore> ItemStore { get; set; }
     }
 }

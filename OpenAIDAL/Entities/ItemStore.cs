@@ -12,7 +12,5 @@ namespace OpenAIDAL.Entities
         public int Count { get; set; }
         public DateTime CreatedDatetime { get; set; }
         public DateTime UpdateDatetime { get; set; }
-
-        public virtual MenuItem MenuItem { get; set; }
     }
 }
