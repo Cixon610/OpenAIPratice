@@ -327,6 +327,197 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "OpenAI",
+			"item": [
+				{
+					"name": "/OpenAI/send",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWTToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"chatRequest\": {\n    \"model\": \"gpt-3.5-turbo\",\n    \"temperature\":0.5,\n    \"topP\": 1,\n    \"maxTokens\": 50\n  },\n  \"conversationID\": \"{{ConversationId}}\",\n  \"message\": \"我要紅茶\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/OpenAI/send",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"OpenAI",
+								"send"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"chatRequest\": {\n    \"model\": \"<string>\",\n    \"temperature\": \"<double>\",\n    \"topP\": \"<double>\",\n    \"maxTokens\": \"<integer>\"\n  },\n  \"conversationID\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/OpenAI/send",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"OpenAI",
+										"send"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "/OpenAI/create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var parsedBody = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"ConversationId\",parsedBody.data.conversationID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWTToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  //SystemPrompt\n  \"message\": \"你是飲料店員，只能依據下方提供的菜單為客人點餐並反覆詢至客人明確給予品名、數量、甜度、冰塊後，並計算總金額與客戶再次確認點選餐點，最後確認訂單後請回覆\\\"訂單發送中請稍後...\\\";若客人點選餐點並不存在於菜單中，請隨機推薦菜單內有的餐點給客人;冰塊選項: 少冰,常溫,熱飲,去冰,微冰,正常冰;甜度選項: 正常糖,1分糖,微糖,無糖,半糖;\\r\\n菜單:\\r\\n品名, [大小:價錢;]\\r\\n青茶瑪奇朵,[中杯(M):40;大杯(L):55;]\\r\\n紅茶瑪奇朵,[中杯(M):40;大杯(L):55;]\\r\\n冰淇淋奶茶,[中杯(M):50;大杯(L):65;]\\r\\n布丁奶茶,[中杯(M):55;大杯(L):75;]\\r\\n燕麥烏龍奶,[中杯(M):30;大杯(L):35;]\\r\\n燕麥奶青,[中杯(M):40;大杯(L):55;]\\r\\n燕麥奶茶,[中杯(M):40;大杯(L):55;]\\r\\n波霸奶茶,[中杯(M):50;大杯(L):65;]\\r\\n珍珠奶茶,[中杯(M):55;大杯(L):75;]\\r\\n椰果奶茶,[中杯(M):50;大杯(L):65;]\\r\\n烏龍奶,[中杯(M):40;大杯(L):55;]\\r\\n奶綠,[中杯(M):55;大杯(L):75;]\\r\\n可可芭蕾,[中杯(M):40;大杯(L):55;]\\r\\n燕麥阿華田,[中杯(M):50;大杯(L):65;]\\r\\n奶茶,[中杯(M):40;大杯(L):55;]\\r\\n阿華田,[中杯(M):40;大杯(L):55;]\\r\\n\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/OpenAI/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"OpenAI",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"chatRequest\": {\n    \"model\": \"<string>\",\n    \"temperature\": \"<double>\",\n    \"topP\": \"<double>\",\n    \"maxTokens\": \"<integer>\"\n  },\n  \"conversationID\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/OpenAI/create",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"OpenAI",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
 		}
 	],
 	"variable": [
