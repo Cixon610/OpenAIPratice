@@ -1,60 +1,90 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OpenAI_API;
 using OpenAI_API.Chat;
 using OpenAIDAL.Adapter;
 using OpenAIDAL.MySql.Entities;
 using OpenAIService.Helpers;
+using OpenAIService.Models.Request;
+using OpenAIService.Models.Response;
+using OpenAIService.Services;
 
 namespace OpenAIService.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
-    public class OpenAIController : Controller
+    public class OpenAIController : ApiBaseController
     {
-        private readonly MenuAdapter _menuAdapter;
+        private readonly ILogger<ChatController> _logger;
+        private readonly OpenAIAPI _openAI;
         private readonly PromptManager _promptManager;
+        private readonly ChatService _chatService;
 
-        public OpenAIController(MenuAdapter MenuAdapter, PromptManager PromptManager)
+        public OpenAIController(ILogger<ChatController> logger, OpenAIAPI openAI, PromptManager promptManager, ChatService ChatService)
         {
-            _menuAdapter = MenuAdapter;
-            _promptManager = PromptManager;
+            _logger = logger;
+            _openAI = openAI;
+            _promptManager = promptManager;
+            _chatService = ChatService;
         }
-        [HttpGet("TestAI")]
-        public async Task TestAI()
+
+        /// <summary>
+        /// Init chat
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("create")]
+        public IActionResult Create(OpenAIReq aIReq)
         {
-            var api = new OpenAIAPI("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");
-            var chat = api.Chat.CreateConversation();
-            /// give instruction as System
-            chat.AppendSystemMessage("You are a teacher who helps children understand if things are animals or not.  If the user tells you an animal, you say \"yes\".  If the user tells you something that is not an animal, you say \"no\".  You only ever respond with \"yes\" or \"no\".  You do not say anything else.");
-
-            // give a few examples as user and assistant
-            chat.AppendUserInput("Is this an animal? Cat");
-            chat.AppendExampleChatbotOutput("Yes");
-            chat.AppendUserInput("Is this an animal? House");
-            chat.AppendExampleChatbotOutput("No");
-
-            chat.AppendUserInput("Is this an animal? Dog");
-            // and get the response
-            string response = await chat.GetResponseFromChatbotAsync();
-            Console.WriteLine(response); // "Yes"
-
-            // and continue the conversation by asking another
-            chat.AppendUserInput("Is this an animal? Chair");
-            // and get another response
-            response = await chat.GetResponseFromChatbotAsync();
-            Console.WriteLine(response); // "No"
-
-            // the entire chat history is available in chat.Messages
-            foreach (ChatMessage msg in chat.Messages)
+            var chat = _openAI.Chat.CreateConversation(GetChatRequest(aIReq));
+            var (conversationID, initMessageID) = _chatService.InitChat(base.UserId, aIReq.Message);
+            var res = new MessageResponse
             {
-                Console.WriteLine($"{msg.Role}: {msg.Content}");
-            }
+                ConversationID = conversationID
+            };
+            return ResponseBase<MessageResponse>.Ok(res);
         }
-
-        [HttpGet("TestFunction")]
-        public void TestFunction()
+        /// <summary>
+        /// Send Message
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("send")]
+        public IActionResult Send(OpenAIReq aIReq)
         {
-            var a = _promptManager.GetMenu();
+            var chat = _openAI.Chat.CreateConversation(GetChatRequest(aIReq));
+            var msgs = _chatService.GetMessages(aIReq.ConversationID);
+            var newMsgID = _promptManager.ComposeNewMsg(chat, msgs, aIReq.Message, aIReq.ConversationID);
+            var aiRes = chat.GetResponseFromChatbotAsync().Result;
+            var orderID = msgs.Count + 1;
+            _chatService.AddMessage(aIReq.ConversationID, aiRes, orderID, ChatMessageRole.Assistant.ToString());
+            var res = new MessageResponse
+            {
+                ConversationID = aIReq.ConversationID,
+                Messages = new MessageRes
+                {
+                    ID = newMsgID,
+                    Value = aiRes,
+                    OrderID = orderID
+                },
+            };
+
+            return ResponseBase<MessageResponse>.Ok(res);
+        }
+    
+        private ChatRequest GetChatRequest(OpenAIReq aIReq)
+        {
+            var chatReq = new ChatRequest();
+            if (aIReq.ChatRequest?.temperature != null)
+                chatReq.Temperature = aIReq.ChatRequest?.temperature;
+            if (aIReq.ChatRequest?.maxTokens != null)
+                chatReq.MaxTokens = aIReq.ChatRequest?.maxTokens;
+            if (aIReq.ChatRequest?.topP != null)
+                chatReq.TopP = aIReq.ChatRequest?.topP;
+            if (aIReq.ChatRequest?.model != null)
+                chatReq.Model = aIReq.ChatRequest?.model;
+            return chatReq;
         }
     }
 }

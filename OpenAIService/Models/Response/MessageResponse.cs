@@ -1,4 +1,6 @@
-﻿namespace OpenAIService.Models.Response
+﻿using System.Text.Json.Serialization;
+
+namespace OpenAIService.Models.Response
 {
     /// <summary>
     /// 訊息回傳
@@ -12,6 +14,7 @@
         /// <summary>
         /// 訊息
         /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public MessageRes Messages { get; set; }
     }
 
