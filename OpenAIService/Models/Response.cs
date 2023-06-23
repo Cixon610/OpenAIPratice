@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 
-namespace OpenAIService.Models.Response
+namespace OpenAIService.Models
 {
     public class ResponseBase<T>
     {

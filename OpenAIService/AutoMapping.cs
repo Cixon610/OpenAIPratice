@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using OpenAIDAL.MySql.Entities;
-using OpenAIService.ViewModels;
-
+using OpenAIData.ViewModels;
 
 namespace OpenAIService
 {

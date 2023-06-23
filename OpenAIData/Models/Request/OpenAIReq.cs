@@ -1,6 +1,4 @@
-﻿using OpenAI_API.Chat;
-
-namespace OpenAIService.Models.Request
+﻿namespace OpenAIData.Models.Request
 {
     public class OpenAIReq
     {

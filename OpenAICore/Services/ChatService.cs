@@ -1,7 +1,7 @@
 ﻿using OpenAIDAL.Adapter;
 using OpenAIDAL.MySql.Entities;
 
-namespace OpenAIService.Services
+namespace OpenAICore.Services
 {
     public class ChatService
     {

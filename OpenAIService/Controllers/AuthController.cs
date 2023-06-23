@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using OpenAICore.Helpers;
 using OpenAIDAL.MySql.Entities;
-using OpenAIService.Helpers;
-using OpenAIService.Models.Request;
-using OpenAIService.Models.Response;
-using OpenAIService.ViewModels;
+using OpenAIData.Models.Request;
+using OpenAIData.ViewModels;
+using OpenAIService.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

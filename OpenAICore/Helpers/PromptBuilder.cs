@@ -1,4 +1,4 @@
-﻿namespace OpenAIService.Helpers
+﻿namespace OpenAICore.Helpers
 {
     public class PromptBuilder
     {

@@ -5,20 +5,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
-using System.Net;
 using OpenAIService.Filters;
-using OpenAIService.Helpers;
 using System.IdentityModel.Tokens.Jwt;
 using OpenAIService.Middleware;
-using OpenAIService.Models;
 using OpenAI_API;
-using Microsoft.Extensions.DependencyInjection;
 using OpenAIDAL.Adapter;
-using OpenAIService.Services;
-using Microsoft.Extensions.Configuration;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using OpenAIDAL.MySql.Entities;
-using System.Data.Common;
+using OpenAIData.Models;
+using OpenAICore.Helpers;
+using OpenAICore.Services;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()

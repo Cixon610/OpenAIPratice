@@ -1,4 +1,4 @@
-﻿namespace OpenAIService.ViewModels
+﻿namespace OpenAIData.ViewModels
 {
     public class UserVM
     {

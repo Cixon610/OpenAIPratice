@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace OpenAIService.Helpers
+namespace OpenAICore.Helpers
 {
     public class CryptionHelper
     {

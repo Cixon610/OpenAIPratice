@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenAIDAL.MySql\OpenAIDAL.MySql.csproj" />
+    <ProjectReference Include="..\OpenAICore\OpenAICore.csproj" />
+    <ProjectReference Include="..\OpenAIData\OpenAIData.csproj" />
   </ItemGroup>
 
 </Project>

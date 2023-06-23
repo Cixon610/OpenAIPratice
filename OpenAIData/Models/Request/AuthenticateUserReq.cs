@@ -1,4 +1,4 @@
-﻿namespace OpenAIService.Models.Request
+﻿namespace OpenAIData.Models.Request
 {
     public class AuthenticateUserReq
     {

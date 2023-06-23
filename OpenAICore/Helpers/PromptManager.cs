@@ -3,7 +3,7 @@ using OpenAIDAL.Adapter;
 using OpenAIDAL.MySql.Entities;
 using System.Text;
 
-namespace OpenAIService.Helpers
+namespace OpenAICore.Helpers
 {
     //訂單發送中請稍後...
     public class PromptManager

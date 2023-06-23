@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using OpenAI_API;
 using OpenAI_API.Chat;
-using OpenAIService.Helpers;
-using OpenAIService.Models.Request;
-using OpenAIService.Models.Response;
-using OpenAIService.Services;
-using System.Security.Claims;
+using OpenAICore.Helpers;
+using OpenAICore.Services;
+using OpenAIData.Models.Request;
+using OpenAIData.Models.Response;
+using OpenAIService.Models;
 
 namespace OpenAIService.Controllers
 {

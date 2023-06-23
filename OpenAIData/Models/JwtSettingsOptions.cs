@@ -1,4 +1,4 @@
-﻿namespace OpenAIService.Models
+﻿namespace OpenAIData.Models
 {
     public class JwtSettingsOptions
     {

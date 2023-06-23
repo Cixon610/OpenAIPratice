@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace OpenAIService.Models.Response
+namespace OpenAIData.Models.Response
 {
     /// <summary>
     /// 訊息回傳

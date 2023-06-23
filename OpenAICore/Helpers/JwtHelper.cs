@@ -1,10 +1,9 @@
 ﻿using JWT.Algorithms;
 using JWT.Builder;
 using Microsoft.Extensions.Options;
-using OpenAIService.Models;
-using System.Security.Claims;
+using OpenAIData.Models;
 
-namespace OpenAIService.Helpers 
+namespace OpenAICore.Helpers 
 {
 
   public class JwtHelper {
