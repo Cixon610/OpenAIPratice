@@ -14,11 +14,7 @@ namespace OpenAIDAL.VirtualObjects
         public string ItemType { get; set; }
         public List<string> AvailableIce { get; set; }
         public List<string> AvailableSuger { get; set; }
-        public List<AvailableSizeVO> AvailableSize { get; set; }
-    }
-    public class AvailableSizeVO
-    {
-        public string Size { get; set; }
-        public int Value { get; set; }
+        public List<KeyValuePair<string, int>> AvailableSize { get; set; }
+        public List<KeyValuePair<string, int>> Availabletoppings { get; set; }
     }
 }

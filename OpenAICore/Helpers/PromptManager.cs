@@ -23,7 +23,7 @@ namespace OpenAICore.Helpers
         public string GetMenu()
         {
             var strBuilder = new StringBuilder();
-            var menuItem = _menuAdapter.GetMenu();
+            var menuItem = _menuAdapter.Get();
             //先撈前十筆測試
             //menuItem = menuItem.GetRange(0, 10);
             //TODO:不同飲品改撈DB值，在確認怎麼省token量
@@ -35,7 +35,7 @@ namespace OpenAICore.Helpers
                 strBuilder.Append($"{item.ItemName},[");
                 foreach( var size in item.AvailableSize)
                 {
-                    strBuilder.Append($"{size.Size}:{size.Value};");
+                    strBuilder.Append($"{size.Key}:{size.Value};");
                 }
                 strBuilder.Append($"]{Environment.NewLine}");
             }

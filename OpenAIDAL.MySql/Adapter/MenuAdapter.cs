@@ -22,9 +22,9 @@ namespace OpenAIDAL.Adapter
         //public Dictionary<string, IEnumerable<AvailableSizeV>> GetMenu() =>
         //    _openAIContext.AvailableSizeV.GroupBy(x => x.Item).ToDictionary(x=>x.Key,y=> y.Select(z=>z));
 
-        public List<MenuVO> GetMenu()
+        public List<MenuVO> Get()
         {
-            var item = (from mi in _openAIContext.Menuitem
+            var items = (from mi in _openAIContext.Menuitem
                        join mit in _openAIContext.Menuitemtype on mi.MenuItemTypeId equals mit.Id
                        join avs in _openAIContext.Availablesize on mi.Id equals avs.MenuItemId
                        select new 
@@ -41,10 +41,24 @@ namespace OpenAIDAL.Adapter
                            ItemID = g.Key.ItemID,
                            ItemName = g.Key.ItemName,
                            ItemType = g.Key.ItemType,
-                           AvailableSize = g.Select(s => new AvailableSizeVO { Size = s.Size, Value = s.Value }).ToList()
+                           AvailableSize = g.Select(s => KeyValuePair.Create(s.Size, s.Value)).ToList()
                        })
                        .ToList();
-            return item;
+
+            var availableToppings = from at in _openAIContext.Availabletopping
+                                    join t in _openAIContext.Topping on at.ToppingId equals t.Id
+                                    select new { t.Id ,t.Name, t.Value };
+            var availableIce = _openAIContext.Availableice.ToList();
+            var availableSuger = _openAIContext.Availablesuger.ToList();
+
+            items = items.Select(x =>
+            {
+                x.AvailableIce = availableIce.Where(y => y.MenuItemId == x.ItemID).Select(y => y.Name).ToList();
+                x.AvailableSuger = availableSuger.Where(y => y.MenuItemId == x.ItemID).Select(y => y.Name).ToList();
+                x.Availabletoppings = availableToppings.Where(y => y.Id == x.ItemID).Select(y => KeyValuePair.Create(y.Name,y.Value)).ToList();
+                return x;
+            }).ToList();
+            return items;
         }
     }
 }

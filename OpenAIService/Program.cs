@@ -47,6 +47,7 @@ try
     builder.Services.AddScoped<MenuAdapter>();
     builder.Services.AddScoped<ChatAdapter>();
     builder.Services.AddScoped<ChatService>();
+    builder.Services.AddScoped<MenuService>();
 
     #endregion
 
