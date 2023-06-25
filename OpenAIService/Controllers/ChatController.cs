@@ -7,6 +7,9 @@ using OpenAICore.Services;
 using OpenAIData.Models.Request;
 using OpenAIData.Models.Response;
 using OpenAIService.Models;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace OpenAIService.Controllers
 {
@@ -90,6 +93,43 @@ namespace OpenAIService.Controllers
             };
 
             return ResponseBase<MessageResponse>.Ok(res);
+        }
+
+
+        /// <summary>
+        /// SSE Send Message
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("send/sse")]
+        public async Task<object> SendSSE(ChatSendReq req)
+        {
+            var chat = _openAI.Chat.CreateConversation(new ChatRequest()
+            {
+                Temperature = 0.5,
+                MaxTokens = 200,
+            });
+
+            var msgs = _chatService.GetMessages(req.ConversationID);
+            var newMsgID = _promptManager.ComposeNewMsg(chat, msgs, req.Message, req.ConversationID);
+            var chatResCollection = string.Empty;
+            HttpContext.Response.ContentType = "text/event-stream";
+            await foreach (var chatRes in chat.StreamResponseEnumerableFromChatbotAsync())
+            {
+                chatResCollection += chatRes;
+                var chatResJson = JsonSerializer.Serialize(ResponseBase<string>.Ok(chatRes));
+                var bytes = Encoding.UTF8.GetBytes($"data: {chatResJson}\n\n");
+                await HttpContext.Response.Body.WriteAsync(bytes);
+                await HttpContext.Response.Body.FlushAsync();
+            }
+            var bytesClose = Encoding.UTF8.GetBytes($"event: close\n\n");
+            await HttpContext.Response.Body.WriteAsync(bytesClose);
+            await HttpContext.Response.Body.FlushAsync();
+
+            var orderID = msgs.Count + 1;
+            _chatService.AddMessage(req.ConversationID, chatResCollection, orderID, ChatMessageRole.Assistant.ToString());
+            
+            return null;
         }
     }
 }
