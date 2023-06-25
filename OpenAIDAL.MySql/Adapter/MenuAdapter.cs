@@ -1,13 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using OpenAIDAL.MySql.Entities;
-using OpenAIDAL.VirtualObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OpenAIDAL.MySql.Entities;
+using OpenAIData.VirtualObjects;
 
 namespace OpenAIDAL.Adapter
 {
@@ -19,8 +11,6 @@ namespace OpenAIDAL.Adapter
         {
             _openAIContext = openAIContext;
         }
-        //public Dictionary<string, IEnumerable<AvailableSizeV>> GetMenu() =>
-        //    _openAIContext.AvailableSizeV.GroupBy(x => x.Item).ToDictionary(x=>x.Key,y=> y.Select(z=>z));
 
         public List<MenuVO> Get()
         {

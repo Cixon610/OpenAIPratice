@@ -14,6 +14,7 @@ using OpenAIDAL.MySql.Entities;
 using OpenAIData.Models;
 using OpenAICore.Helpers;
 using OpenAICore.Services;
+using OpenAIDAL.MySql.Adapter;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -44,10 +45,12 @@ try
 
     #region custom class
     builder.Services.AddScoped<PromptManager>();
-    builder.Services.AddScoped<MenuAdapter>();
-    builder.Services.AddScoped<ChatAdapter>();
     builder.Services.AddScoped<ChatService>();
+    builder.Services.AddScoped<ChatAdapter>();
     builder.Services.AddScoped<MenuService>();
+    builder.Services.AddScoped<MenuAdapter>();
+    builder.Services.AddScoped<OrderService>();
+    builder.Services.AddScoped<OrderAdapter>();
 
     #endregion
 

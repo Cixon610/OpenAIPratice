@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OpenAICore.Services;
-using OpenAIDAL.VirtualObjects;
+using OpenAIData.VirtualObjects;
+using OpenAIService.Models;
 
 namespace OpenAIService.Controllers
 {
@@ -18,9 +19,6 @@ namespace OpenAIService.Controllers
         }
 
         [HttpGet("get")]
-        public IEnumerable<MenuVO> GetMenuVOs()
-        {
-            return _menuService.Get();
-        }
+        public IActionResult GetMenuVOs() => ResponseBase<IEnumerable<MenuVO>>.Ok(_menuService.Get());
     }
 }

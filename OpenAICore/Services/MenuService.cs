@@ -1,11 +1,5 @@
 ﻿using OpenAIDAL.Adapter;
-using OpenAIDAL.VirtualObjects;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OpenAIData.VirtualObjects;
 
 namespace OpenAICore.Services
 {

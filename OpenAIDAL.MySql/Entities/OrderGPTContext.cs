@@ -342,9 +342,17 @@ namespace OpenAIDAL.MySql.Entities
                     .IsRequired()
                     .HasMaxLength(10);
 
-                entity.Property(e => e.Memo)
+                entity.Property(e => e.ItemId)
                     .IsRequired()
-                    .HasMaxLength(300);
+                    .HasMaxLength(38)
+                    .HasColumnName("ItemID")
+                    .IsFixedLength();
+
+                entity.Property(e => e.ItemName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Memo).HasMaxLength(300);
 
                 entity.Property(e => e.OrderId)
                     .IsRequired()
@@ -382,6 +390,11 @@ namespace OpenAIDAL.MySql.Entities
                     .IsRequired()
                     .HasMaxLength(38)
                     .HasColumnName("OrderDetailID")
+                    .IsFixedLength();
+
+                entity.Property(e => e.OrderId)
+                    .HasMaxLength(38)
+                    .HasColumnName("OrderID")
                     .IsFixedLength();
 
                 entity.Property(e => e.ToppingId)

@@ -9,6 +9,8 @@ namespace OpenAIDAL.MySql.Entities
     {
         public string Id { get; set; }
         public string OrderId { get; set; }
+        public string ItemId { get; set; }
+        public string ItemName { get; set; }
         public string Size { get; set; }
         public string Suger { get; set; }
         public string Ice { get; set; }
