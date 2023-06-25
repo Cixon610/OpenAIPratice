@@ -518,6 +518,252 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "/Order/get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWTToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/Order/get?orderId={{OrderId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Order",
+								"get"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "{{OrderId}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/Order/get?orderId=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Order",
+										"get"
+									],
+									"query": [
+										{
+											"key": "orderId",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "/Order/add",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var parsedBody = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"OrderId\",parsedBody.data.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWTToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"messageId\": \"df109f9e-039a-11ee-96e8-e4a8dfe5ea5d\",\n  \"memo\": \"我是備註\",\n  \"details\": [\n    {\n      \"itemId\": \"ff109f9e-039a-11ee-96e8-e4a8dfe5ea5d\",\n      \"itemName\": \"阿華田\",\n      \"size\": \"大悲\",\n      \"suger\": \"少糖\",\n      \"ice\": \"少冰\",\n      \"value\": 100,\n      \"toppings\": [\n      ],\n      \"memo\": \"我是備註D\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Order/add",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Order",
+								"add"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"messageId\": \"<string>\",\n  \"memo\": \"<string>\",\n  \"details\": [\n    {\n      \"itemId\": \"<string>\",\n      \"itemName\": \"<string>\",\n      \"size\": \"<string>\",\n      \"suger\": \"<string>\",\n      \"ice\": \"<string>\",\n      \"value\": \"<integer>\",\n      \"toppings\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<integer>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<integer>\"\n        }\n      ],\n      \"memo\": \"<string>\"\n    },\n    {\n      \"itemId\": \"<string>\",\n      \"itemName\": \"<string>\",\n      \"size\": \"<string>\",\n      \"suger\": \"<string>\",\n      \"ice\": \"<string>\",\n      \"value\": \"<integer>\",\n      \"toppings\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<integer>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<integer>\"\n        }\n      ],\n      \"memo\": \"<string>\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Order/add",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Order",
+										"add"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Menu",
+			"item": [
+				{
+					"name": "/Menu/get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWTToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/Menu/get",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Menu",
+								"get"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/Menu/get",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Menu",
+										"get"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
 		}
 	],
 	"variable": [
