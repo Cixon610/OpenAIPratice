@@ -126,6 +126,15 @@ try
       });
     #endregion
 
+    #region CORS
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(builder =>
+        {
+            builder.WithOrigins("http://localhost:3000", "https://localhost:3000", "http://localhost", "https://localhost");
+        });
+    });
+    #endregion
     var app = builder.Build();
     app.UseMiddleware<ExceptionHandlerMiddleware>();
     if (app.Environment.IsDevelopment())
@@ -133,6 +142,7 @@ try
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+    app.UseCors();
     //app.UseHttpsRedirection();
     app.UseAuthentication();
     app.UseAuthorization();
